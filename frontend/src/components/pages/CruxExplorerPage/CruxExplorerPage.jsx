@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Container } from '@mui/material';
+import { Container, Box } from '@mui/material';
 import { queryCrux } from '../../../services/api.service';
-import { transformCruxResult } from '../../../utils/crux.utils';
+import { parseUrls, transformCruxResults } from '../../../utils/crux.utils';
 import { DEFAULTS, APP_TEXT } from '../../../constants/crux.constants';
 import {
   hasTransformationError,
@@ -9,27 +9,32 @@ import {
   readTransformationData,
 } from '../../../readers';
 import { PageHeader } from '../../molecules';
-import { SearchForm, ErrorMessage, CruxDataTable } from '../../organisms';
+import { SearchForm, ErrorMessage, CruxDataTable, SummarySection } from '../../organisms';
 
 export default function CruxExplorerPage() {
-  const [url, setUrl] = useState(DEFAULTS.URL);
+  const [urls, setUrls] = useState(DEFAULTS.URLS);
   const [formFactor, setFormFactor] = useState(DEFAULTS.FORM_FACTOR);
   const [originFallback, setOriginFallback] = useState(DEFAULTS.ORIGIN_FALLBACK);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [result, setResult] = useState(null);
+  const [results, setResults] = useState([]);
   async function onSearch(e) {
     e.preventDefault();
     setLoading(true);
     setError('');
-    setResult(null);
+    setResults([]);
     try {
-      const data = await queryCrux({ urls: [url], formFactor, originFallback });
-      const transformed = transformCruxResult(data, formFactor);
+      const urlList = parseUrls(urls);
+      if (urlList.length === 0) {
+        setError('Please enter at least one URL');
+        return;
+      }
+      const data = await queryCrux({ urls: urlList, formFactor, originFallback });
+      const transformed = transformCruxResults(data, formFactor);
       if (hasTransformationError(transformed)) {
         setError(readTransformationError(transformed));
       } else {
-        setResult(readTransformationData(transformed));
+        setResults(readTransformationData(transformed));
       }
     } catch (err) {
       setError(err.message || String(err));
@@ -44,8 +49,8 @@ export default function CruxExplorerPage() {
         subtitle={APP_TEXT.SUBTITLE}
       />
       <SearchForm
-        url={url}
-        setUrl={setUrl}
+        urls={urls}
+        setUrls={setUrls}
         formFactor={formFactor}
         setFormFactor={setFormFactor}
         originFallback={originFallback}
@@ -54,7 +59,14 @@ export default function CruxExplorerPage() {
         loading={loading}
       />
       <ErrorMessage error={error} />
-      <CruxDataTable result={result} />
+      <Box>
+        {results.map((result, index) => (
+          <Box key={index} sx={{ mb: 4 }}>
+            <CruxDataTable result={result} />
+          </Box>
+        ))}
+      </Box>
+      <SummarySection results={results} />
     </Container>
   );
 }

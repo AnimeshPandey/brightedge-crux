@@ -57,8 +57,11 @@ export const FILTER_TYPES = {
 };
 
 export const SORT_PROPERTIES = {
+  DEFAULT: 'default',
   NAME: 'name',
   VALUE: 'value',
+  AVERAGE: 'average',
+  SUM: 'sum',
 };
 
 export const SORT_ORDERS = {

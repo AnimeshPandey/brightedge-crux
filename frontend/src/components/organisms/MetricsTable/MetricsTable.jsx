@@ -1,11 +1,16 @@
 import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material';
 import { SortableTableHeader } from '../../molecules';
-import { MetricRow } from '../../molecules';
+import { MetricName, MetricValue, MetricDescription } from '../../atoms';
 import { EmptyState } from '../../atoms';
 import { COMMON_STYLES } from '../../../constants/theme.constants';
-import { SORT_PROPERTIES } from '../../../constants/metrics.constants';
 
-export default function MetricsTable({ metrics, sortBy, sortOrder, onSort }) {
+const DEFAULT_COLUMNS = [
+  { key: 'name', label: 'Metric', sortable: true, sortKey: 'name', render: (metric) => <MetricName name={metric.name} /> },
+  { key: 'value', label: 'Value (p75)', sortable: true, sortKey: 'value', render: (metric) => <MetricValue value={metric.value} unit={metric.unit} /> },
+  { key: 'description', label: 'Description', sortable: false, render: (metric) => <MetricDescription description={metric.description} /> },
+];
+
+export default function MetricsTable({ metrics, sortBy, sortOrder, onSort, columns = DEFAULT_COLUMNS }) {
   if (metrics.length === 0) {
     return <EmptyState message="No metrics to display" />;
   }
@@ -14,24 +19,30 @@ export default function MetricsTable({ metrics, sortBy, sortOrder, onSort }) {
       <Table sx={{ minWidth: 650 }}>
         <TableHead>
           <TableRow sx={COMMON_STYLES.tableHeaderRow}>
-            <SortableTableHeader
-              label="Metric"
-              active={sortBy === SORT_PROPERTIES.NAME}
-              direction={sortOrder}
-              onClick={() => onSort(SORT_PROPERTIES.NAME)}
-            />
-            <SortableTableHeader
-              label="Value (p75)"
-              active={sortBy === SORT_PROPERTIES.VALUE}
-              direction={sortOrder}
-              onClick={() => onSort(SORT_PROPERTIES.VALUE)}
-            />
-            <TableCell>Description</TableCell>
+            {columns.map((column) => (
+              column.sortable ? (
+                <SortableTableHeader
+                  key={column.key}
+                  label={column.label}
+                  active={sortBy === column.sortKey}
+                  direction={sortOrder}
+                  onClick={() => onSort(column.sortKey)}
+                />
+              ) : (
+                <TableCell key={column.key}>{column.label}</TableCell>
+              )
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
           {metrics.map((metric) => (
-            <MetricRow key={metric.id} metric={metric} />
+            <TableRow key={metric.id} sx={COMMON_STYLES.tableRow}>
+              {columns.map((column) => (
+                <TableCell key={column.key}>
+                  {column.render(metric)}
+                </TableCell>
+              ))}
+            </TableRow>
           ))}
         </TableBody>
       </Table>

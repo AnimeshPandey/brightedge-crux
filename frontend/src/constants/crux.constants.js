@@ -20,19 +20,21 @@ export const FORM_FACTOR_OPTIONS = [
 ];
 
 export const DEFAULTS = {
-  URL: 'https://developer.chrome.com',
+  URLS: 'https://developer.intuit.com\nhttps://quickbooks.intuit.com\nhttps://turbotax.intuit.com',
   FORM_FACTOR: FORM_FACTORS.ANY,
   ORIGIN_FALLBACK: true,
 };
 
 export const APP_TEXT = {
   TITLE: 'CrUX Explorer',
-  SUBTITLE: 'Explore Chrome User Experience Report data for any URL',
+  SUBTITLE: 'Explore Chrome User Experience Report data for multiple URLs',
   SEARCH_BUTTON: 'Search',
   LOADING_BUTTON: 'Loading…',
-  URL_LABEL: 'URL',
+  URL_LABEL: 'URLs (one per line)',
   FORM_FACTOR_LABEL: 'Form Factor',
   ORIGIN_FALLBACK_LABEL: 'Use origin fallback',
+  SUMMARY_TITLE: 'Summary Statistics',
+  SUMMARY_SUBTITLE: 'Averages across all URLs',
 };
 
 export const API_STATUS = {

@@ -1,4 +1,5 @@
 export function asNumber(value) {
+  if (value === null || value === undefined) return null;
   const num = Number(value);
-  return isNaN(num) ? 0 : num;
+  return isNaN(num) ? null : num;
 }

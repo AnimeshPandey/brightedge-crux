@@ -9,7 +9,7 @@ import { processMetrics, toggleSortOrder, buildMetricsFromResult } from '../../.
 export default function CruxDataTable({ result }) {
   const [filterType, setFilterType] = useState(FILTER_TYPES.ALL);
   const [threshold, setThreshold] = useState('');
-  const [sortBy, setSortBy] = useState(SORT_PROPERTIES.NAME);
+  const [sortBy, setSortBy] = useState(SORT_PROPERTIES.DEFAULT);
   const [sortOrder, setSortOrder] = useState(SORT_ORDERS.ASC);
   if (!result) return null;
   const allMetrics = buildMetricsFromResult(result);
