@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { normalizeCrux } from '../utils/crux.utils.js';
+
 const API = 'https://chromeuxreport.googleapis.com/v1/records:queryRecord';
 
 // Call the CrUX API for either a URL or an origin
@@ -16,5 +18,5 @@ export async function queryCrux({ url, origin, formFactor }) {
   console.log('Calling CRuX:', `${API}?key=${key}`, body);
 
   const { data } = await axios.post(`${API}?key=${key}`, body, { timeout: 15000 });
-  return data;
+  return normalizeCrux(data);
 }
