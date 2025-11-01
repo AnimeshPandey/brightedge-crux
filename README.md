@@ -8,33 +8,7 @@ A full-stack web application for exploring Chrome User Experience Report (CrUX) 
 
 Experience the application in action at: **https://brightedge-crux.vercel.app/**
 
-### Quick Preview
-
-<details>
-<summary>📱 Click to see embedded preview</summary>
-
-<br/>
-
-[![CrUX Explorer Preview](https://img.shields.io/badge/Live%20Demo-Click%20Here-667eea?style=for-the-badge&logo=vercel)](https://brightedge-crux.vercel.app/)
-
-**Interactive Preview:**
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  🚀 CrUX Explorer - Live Application                        │
-│  https://brightedge-crux.vercel.app/                        │
-│                                                             │
-│  ✨ Features:                                               │
-│  • Multi-URL Performance Analysis                          │
-│  • Real-time Core Web Vitals Metrics                       │
-│  • Interactive Charts & Visualizations                     │
-│  • Performance Insights & Recommendations                  │
-│                                                             │
-│  Click the badge above to launch the application ↑         │
-└─────────────────────────────────────────────────────────────┘
-```
-
-</details>
+Check out the [🚀 Setup Instructions](#-setup-instructions) to get started on your local machine.
 
 ## 📸 Screenshots
 
@@ -54,22 +28,22 @@ _Aggregated metrics and comparison charts for all queried URLs_
 
 ## 📋 Table of Contents
 
-- [Live Demo](#live-demo)
-- [Screenshots](#screenshots)
-- [Overview](#overview)
-- [Features](#features)
-- [How It Works](#how-it-works)
-- [Architecture](#architecture)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Design Architecture](#design-architecture)
-- [Component Architecture](#component-architecture)
-- [Setup Instructions](#setup-instructions)
-- [Usage](#usage)
-- [API Documentation](#api-documentation)
-- [Development](#development)
-- [Known Issues](#known-issues)
-- [Next Steps](#next-steps)
+- [🚀 Live Demo](#-live-demo)
+- [📸 Screenshots](#-screenshots)
+- [🎯 Overview](#-overview)
+- [✨ Features](#-features)
+- [🔍 How It Works](#-how-it-works)
+- [🏗️ Architecture](#️-architecture)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📁 Project Structure](#-project-structure)
+- [🎨 Design Architecture](#-design-architecture)
+- [🧩 Component Architecture](#-component-architecture)
+- [🚀 Setup Instructions](#-setup-instructions)
+- [📖 Usage](#-usage)
+- [🔌 API Documentation](#-api-documentation)
+- [💻 Development](#-development)
+- [⚠️ Known Issues](#️-known-issues)
+- [🚀 Next Steps](#-next-steps-1)
 
 ## 🎯 Overview
 
