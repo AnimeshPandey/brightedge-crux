@@ -1,4 +1,5 @@
 import { TableRow, TableCell } from '@mui/material';
+import PropTypes from 'prop-types';
 import { MetricName, MetricValue, MetricDescription } from '../../atoms';
 import { COMMON_STYLES } from '../../../constants/theme.constants';
 
@@ -17,3 +18,12 @@ export default function MetricRow({ metric }) {
     </TableRow>
   );
 }
+
+MetricRow.propTypes = {
+  metric: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    unit: PropTypes.string,
+    description: PropTypes.string.isRequired,
+  }).isRequired,
+};

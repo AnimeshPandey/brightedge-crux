@@ -1,13 +1,32 @@
 import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material';
+import PropTypes from 'prop-types';
 import { SortableTableHeader } from '../../molecules';
 import { MetricName, MetricValue, MetricDescription } from '../../atoms';
 import { EmptyState } from '../../atoms';
 import { COMMON_STYLES } from '../../../constants/theme.constants';
+import { TABLE_COLUMNS } from '../../../constants/metrics.constants';
 
 const DEFAULT_COLUMNS = [
-  { key: 'name', label: 'Metric', sortable: true, sortKey: 'name', render: (metric) => <MetricName name={metric.name} /> },
-  { key: 'value', label: 'Value (p75)', sortable: true, sortKey: 'value', render: (metric) => <MetricValue value={metric.value} unit={metric.unit} /> },
-  { key: 'description', label: 'Description', sortable: false, render: (metric) => <MetricDescription description={metric.description} /> },
+  {
+    key: TABLE_COLUMNS.NAME,
+    label: 'Metric',
+    sortable: true,
+    sortKey: TABLE_COLUMNS.NAME,
+    render: (metric) => <MetricName name={metric.name} />
+  },
+  {
+    key: TABLE_COLUMNS.VALUE,
+    label: 'Value (p75)',
+    sortable: true,
+    sortKey: TABLE_COLUMNS.VALUE,
+    render: (metric) => <MetricValue value={metric.value} unit={metric.unit} />
+  },
+  {
+    key: TABLE_COLUMNS.DESCRIPTION,
+    label: 'Description',
+    sortable: false,
+    render: (metric) => <MetricDescription description={metric.description} />
+  },
 ];
 
 export default function MetricsTable({ metrics, sortBy, sortOrder, onSort, columns = DEFAULT_COLUMNS }) {
@@ -49,3 +68,17 @@ export default function MetricsTable({ metrics, sortBy, sortOrder, onSort, colum
     </TableContainer>
   );
 }
+
+MetricsTable.propTypes = {
+  metrics: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      unit: PropTypes.string,
+      description: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  sortBy: PropTypes.string.isRequired,
+  sortOrder: PropTypes.string.isRequired,
+  onSort: PropTypes.func.isRequired,
+};

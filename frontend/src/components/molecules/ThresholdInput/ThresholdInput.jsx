@@ -1,4 +1,5 @@
 import { TextField } from '@mui/material';
+import PropTypes from 'prop-types';
 
 export default function ThresholdInput({ value, onChange, disabled }) {
   return (
@@ -12,3 +13,9 @@ export default function ThresholdInput({ value, onChange, disabled }) {
     />
   );
 }
+
+ThresholdInput.propTypes = {
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+};

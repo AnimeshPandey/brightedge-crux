@@ -1,4 +1,5 @@
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import PropTypes from 'prop-types';
 import { FILTER_TYPES } from '../../../constants/metrics.constants';
 
 export default function FilterTypeSelect({ value, onChange }) {
@@ -14,3 +15,8 @@ export default function FilterTypeSelect({ value, onChange }) {
     </FormControl>
   );
 }
+
+FilterTypeSelect.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};

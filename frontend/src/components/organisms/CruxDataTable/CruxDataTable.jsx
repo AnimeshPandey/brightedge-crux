@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Box } from '@mui/material';
+import PropTypes from 'prop-types';
 import { ResultHeader } from '../ResultHeader';
 import { FilterToolbar } from '../FilterToolbar';
 import { MetricsTable } from '../MetricsTable';
+import { InsightsPanel } from '../InsightsPanel';
 import { FILTER_TYPES, SORT_PROPERTIES, SORT_ORDERS } from '../../../constants/metrics.constants';
-import { processMetrics, toggleSortOrder, buildMetricsFromResult } from '../../../utils/metrics.utils';
+import { processMetrics, toggleSortOrder, buildMetricsFromResult, calculatePerformanceScore } from '../../../utils/metrics.utils';
 
 export default function CruxDataTable({ result }) {
   const [filterType, setFilterType] = useState(FILTER_TYPES.ALL);
@@ -14,6 +16,7 @@ export default function CruxDataTable({ result }) {
   if (!result) return null;
   const allMetrics = buildMetricsFromResult(result);
   const processedMetrics = processMetrics(allMetrics, filterType, threshold, sortBy, sortOrder);
+  const performanceScore = calculatePerformanceScore(allMetrics);
   function handleSort(property) {
     if (sortBy === property) {
       setSortOrder(toggleSortOrder(sortOrder));
@@ -24,7 +27,8 @@ export default function CruxDataTable({ result }) {
   }
   return (
     <Box>
-      <ResultHeader url={result.url} formFactor={result.formFactor} />
+      <ResultHeader url={result.url} formFactor={result.formFactor} performanceScore={performanceScore} />
+      <InsightsPanel metrics={allMetrics} />
       <FilterToolbar
         filterType={filterType}
         setFilterType={setFilterType}
@@ -41,3 +45,11 @@ export default function CruxDataTable({ result }) {
     </Box>
   );
 }
+
+CruxDataTable.propTypes = {
+  result: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+    formFactor: PropTypes.string,
+    metrics: PropTypes.object.isRequired,
+  }).isRequired,
+};

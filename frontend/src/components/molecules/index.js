@@ -3,3 +3,4 @@ export * from './MetricRow';
 export * from './SortableTableHeader';
 export * from './FilterTypeSelect';
 export * from './ThresholdInput';
+export * from './PerformanceGauge';

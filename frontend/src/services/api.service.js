@@ -1,3 +1,4 @@
+// API base URL from environment variable or default to localhost
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8080';
 
 export async function queryCrux({ urls, formFactor, originFallback }) {
@@ -10,5 +11,5 @@ export async function queryCrux({ urls, formFactor, originFallback }) {
     const txt = await res.text().catch(() => '');
     throw new Error(`HTTP ${res.status} ${res.statusText}: ${txt}`);
   }
-  return res.json(); // { results: [...] }
+  return res.json();
 }

@@ -1,4 +1,5 @@
 import { Alert } from '@mui/material';
+import PropTypes from 'prop-types';
 import { COMMON_STYLES } from '../../../constants/theme.constants';
 
 export default function ErrorMessage({ error }) {
@@ -9,3 +10,7 @@ export default function ErrorMessage({ error }) {
     </Alert>
   );
 }
+
+ErrorMessage.propTypes = {
+  error: PropTypes.string,
+};

@@ -1,4 +1,5 @@
 import { Paper, Box, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 import { FilterTypeSelect, ThresholdInput } from '../../molecules';
 import { FILTER_TYPES } from '../../../constants/metrics.constants';
 import { COMMON_STYLES } from '../../../constants/theme.constants';
@@ -20,3 +21,11 @@ export default function FilterToolbar({ filterType, setFilterType, threshold, se
     </Paper>
   );
 }
+
+FilterToolbar.propTypes = {
+  filterType: PropTypes.string.isRequired,
+  setFilterType: PropTypes.func.isRequired,
+  threshold: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  setThreshold: PropTypes.func.isRequired,
+  count: PropTypes.number.isRequired,
+};

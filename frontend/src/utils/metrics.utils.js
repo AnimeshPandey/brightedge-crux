@@ -2,9 +2,12 @@ import { asNumber } from './general.utils';
 import {
   METRIC_DISPLAY_ORDER,
   METRIC_DEFINITIONS,
+  METRIC_IDS,
   FILTER_TYPES,
   SORT_PROPERTIES,
   SORT_ORDERS,
+  PERFORMANCE_RATINGS,
+  METRIC_RECOMMENDATIONS,
 } from '../constants/metrics.constants';
 
 export function sortMetrics(metrics, sortBy, sortOrder) {
@@ -95,4 +98,65 @@ export function calculateSummaryMetrics(results) {
       count,
     };
   });
+}
+
+export function getPerformanceRating(metricId, value) {
+  if (value === null || value === undefined) return null;
+  const definition = METRIC_DEFINITIONS[metricId];
+  if (!definition?.thresholds) return null;
+  const numValue = asNumber(value);
+  if (numValue === null) return null;
+  if (numValue <= definition.thresholds.good) return PERFORMANCE_RATINGS.GOOD;
+  if (numValue <= definition.thresholds.poor) return PERFORMANCE_RATINGS.NEEDS_IMPROVEMENT;
+  return PERFORMANCE_RATINGS.POOR;
+}
+
+export function getMetricRecommendation(metricId, rating) {
+  if (!rating || rating === PERFORMANCE_RATINGS.GOOD) return null;
+  return METRIC_RECOMMENDATIONS[metricId]?.[rating] || null;
+}
+
+export function generateInsights(metrics) {
+  const insights = [];
+  metrics.forEach(metric => {
+    const rating = getPerformanceRating(metric.id, metric.value);
+    const recommendation = getMetricRecommendation(metric.id, rating);
+    if (recommendation) {
+      insights.push({
+        metricId: metric.id,
+        metricName: metric.name,
+        value: metric.value,
+        unit: metric.unit,
+        rating,
+        recommendation,
+      });
+    }
+  });
+  return insights;
+}
+
+export function calculatePerformanceScore(metrics) {
+  const METRIC_WEIGHTS = {
+    [METRIC_IDS.LCP]: 0.25,
+    [METRIC_IDS.CLS]: 0.25,
+    [METRIC_IDS.INP]: 0.20,
+    [METRIC_IDS.FCP]: 0.15,
+    [METRIC_IDS.TTFB]: 0.10,
+    [METRIC_IDS.FID]: 0.05,
+  };
+  let totalScore = 0;
+  let totalWeight = 0;
+  metrics.forEach(metric => {
+    const rating = getPerformanceRating(metric.id, metric.value);
+    if (rating === null) return;
+    const weight = METRIC_WEIGHTS[metric.id] || 0;
+    let score = 0;
+    if (rating === PERFORMANCE_RATINGS.GOOD) score = 100;
+    else if (rating === PERFORMANCE_RATINGS.NEEDS_IMPROVEMENT) score = 50;
+    else if (rating === PERFORMANCE_RATINGS.POOR) score = 0;
+    totalScore += score * weight;
+    totalWeight += weight;
+  });
+  if (totalWeight === 0) return null;
+  return Math.round(totalScore / totalWeight);
 }

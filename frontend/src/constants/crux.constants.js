@@ -27,7 +27,7 @@ export const DEFAULTS = {
 
 export const APP_TEXT = {
   TITLE: 'CrUX Explorer',
-  SUBTITLE: 'Explore Chrome User Experience Report data for multiple URLs',
+  SUBTITLE: 'Analyze real-world performance metrics from Chrome User Experience Report',
   SEARCH_BUTTON: 'Search',
   LOADING_BUTTON: 'Loading…',
   URL_LABEL: 'URLs (one per line)',

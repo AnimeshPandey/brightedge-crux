@@ -4,10 +4,16 @@ export const COLORS = {
   BACKGROUND_LIGHT: '#f5f5f5',
   BACKGROUND_PAPER: '#ffffff',
   TEXT_SECONDARY: 'text.secondary',
-  ERROR: 'error',
+  ERROR: '#d32f2f',
   SUCCESS: 'success',
-  WARNING: 'warning',
+  SUCCESS_LIGHT: '#e8f5e9',
+  WARNING: '#ed6c02',
   BORDER_LIGHT: '#e0e0e0',
+  GRADIENT_PRIMARY: '#667eea',
+  GRADIENT_SECONDARY: '#764ba2',
+  CHART_GREEN: '#4CAF50',
+  CHART_ORANGE: '#FF9800',
+  CHART_RED: '#F44336',
 };
 
 export const SPACING = {
@@ -16,6 +22,13 @@ export const SPACING = {
   MD: 3,
   LG: 4,
   XL: 6,
+};
+
+export const GRADIENTS = {
+  PRIMARY: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+  PRIMARY_HORIZONTAL: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)',
+  PAGE_BACKGROUND: 'linear-gradient(to bottom, #f5f7fa 0%, #c3cfe2 100%)',
+  RADIAL_OVERLAY: 'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%)',
 };
 
 export const COMMON_STYLES = {

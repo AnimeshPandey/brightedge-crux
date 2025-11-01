@@ -5,3 +5,5 @@ export * from './FilterToolbar';
 export * from './MetricsTable';
 export * from './CruxDataTable';
 export * from './SummarySection';
+export * from './InsightsPanel';
+export * from './MetricsComparisonChart';

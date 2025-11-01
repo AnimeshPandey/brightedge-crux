@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Box, Paper, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 import { MetricsTable } from '../MetricsTable';
+import { MetricsComparisonChart } from '../MetricsComparisonChart';
 import { MetricName, MetricValue } from '../../atoms';
 import { calculateSummaryMetrics, processMetrics, toggleSortOrder } from '../../../utils/metrics.utils';
 import { SPACING } from '../../../constants/theme.constants';
@@ -37,6 +39,7 @@ export default function SummarySection({ results }) {
           {APP_TEXT.SUMMARY_SUBTITLE} ({results.length} URL{results.length !== 1 ? 's' : ''})
         </Typography>
       </Paper>
+      <MetricsComparisonChart results={results} />
       <MetricsTable
         metrics={processedMetrics}
         sortBy={sortBy}
@@ -48,3 +51,12 @@ export default function SummarySection({ results }) {
   );
 }
 
+SummarySection.propTypes = {
+  results: PropTypes.arrayOf(
+    PropTypes.shape({
+      url: PropTypes.string.isRequired,
+      formFactor: PropTypes.string,
+      metrics: PropTypes.object.isRequired,
+    })
+  ).isRequired,
+};
